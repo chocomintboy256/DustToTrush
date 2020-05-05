@@ -1,0 +1,37 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DragDrop : MonoBehaviour
+{
+    bool dragFlag = false;
+    Transform hitTransform = null;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void OnMouseDrag()
+    {
+         DragMove();
+    }
+
+    private void DragMove()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 moveTo;
+        mousePos.z = 10;
+
+        moveTo = Camera.main.ScreenToWorldPoint(mousePos);
+        transform.position = moveTo;
+    }
+
+}
