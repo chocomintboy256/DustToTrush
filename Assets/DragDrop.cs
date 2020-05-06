@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class DragDrop : MonoBehaviour
 {
-    bool dragFlag = false;
-    Transform hitTransform = null;
-
     // Start is called before the first frame update
     void Start()
     {
