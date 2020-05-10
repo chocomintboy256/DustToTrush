@@ -49,18 +49,31 @@ public class Dust : MonoBehaviour
 
     void GenerateDusts()
     {
-        float x, y;
         string name;
         int count = Random.Range(3, 5);
         int index = int.Parse(gameObject.name.Replace("dust", ""));
         for (int i = 0; i < count; i++) {
-            x = Random.Range(-2.3f, 2.3f);
-            y = Random.Range(-2.8f, 2.8f);
             name = "dust" + (i + index).ToString();
 
-            GameObject newDust = Instantiate(gameObject, new Vector3(x, y, 0), Quaternion.identity);
+            GameObject newDust = Instantiate(gameObject, GetRandomVector3(), Quaternion.identity);
             newDust.name = name;
             newDust.transform.parent = dusts;
         }
     }
+
+    Vector3 GetRandomVector3()
+    {
+        Vector3 vec = new Vector3(
+            Random.Range(-2.3f, 2.3f),
+            Random.Range(-2.8f, 2.8f),
+            0
+        );
+        return vec;
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = GetRandomVector3();
+    }
+
 }

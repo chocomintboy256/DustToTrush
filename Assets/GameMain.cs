@@ -14,6 +14,7 @@ public class GameMain : MonoBehaviour
     void Start()
     {
         scoreText.text = "Score: " + totalScore.ToString();
+        GameObject.FindWithTag("Respawn").GetComponent<Dust>().ResetPosition();
     }
 
     // Update is called once per frame
