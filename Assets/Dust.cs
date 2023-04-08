@@ -31,6 +31,7 @@ public class Dust : MonoBehaviour
             gameMain.TrushIn(score);
             if (dusts.childCount == 1) {
                 GenerateDusts();
+                GameMain.ins.AddTimeBonus();
             }
             Destroy(this.gameObject);
         }
