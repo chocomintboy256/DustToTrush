@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameMain : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class GameMain : MonoBehaviour
     {
         ins = this;
         scoreText.text = "Score: " + totalScore.ToString();
+        UnityEngine.Random.InitState(DateTime.Now.Millisecond);
 
         // get hierarchy objects
         Scene scene = SceneManager.GetSceneByBuildIndex(0);
