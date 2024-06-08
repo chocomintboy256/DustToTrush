@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.PackageManager.UI;
 
 public class GameMain : MonoBehaviour
 {
@@ -26,7 +23,6 @@ public class GameMain : MonoBehaviour
     {
         ins = this;
         scoreText.text = "Score: " + totalScore.ToString();
-        GameObject.FindWithTag("Respawn").GetComponent<Dust>().ResetPosition();
 
         // get hierarchy objects
         Scene scene = SceneManager.GetSceneByBuildIndex(0);
@@ -53,6 +49,10 @@ public class GameMain : MonoBehaviour
         timeRemining--;
         timeText.text = "Time: " + timeRemining;
     }
+    public void RefleshScore()
+    {
+        scoreText.text = "Score: " + totalScore.ToString();
+    }
     public void AddTimeBonus()
     {
         timeRemining += timeBonus;
@@ -60,6 +60,7 @@ public class GameMain : MonoBehaviour
     }
     public void TrushIn(int trushScore)
     {
-        scoreText.text = "Score: " + (totalScore += trushScore).ToString();
+        totalScore += trushScore;
+        RefleshScore();
     }
 }
