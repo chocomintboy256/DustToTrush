@@ -7,6 +7,10 @@ public class GameMain : MonoBehaviour
 {
     GameObject go;
     public GameObject box;
+    public GameObject MainCanvas;
+    public GameObject hpGauge;
+    public GameObject hpCanvas;
+    public GameObject ScoreDisplayGo;
     public Text scoreText;
     public Text timeText;
     int totalScore = 0;
@@ -60,9 +64,14 @@ public class GameMain : MonoBehaviour
         timeRemining += timeBonus;
         RefleshTimer();
     }
-    public void TrushIn(int trushScore)
+    public void TrushIn(int trushScore, Vector3 pos)
     {
         totalScore += trushScore;
+        GameObject sdgo = Instantiate(ScoreDisplayGo, pos, Quaternion.identity, MainCanvas.transform);
+        ScoreDisplay sd = sdgo.GetComponent<ScoreDisplay>();
+        sd.SetPos(pos);
+        sd.SetScore(trushScore);
+
         RefleshScore();
     }
 }

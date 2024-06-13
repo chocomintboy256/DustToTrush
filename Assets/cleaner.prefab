@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3459239857092593164}
   - component: {fileID: 3459239857092593167}
   - component: {fileID: 3459239857092593166}
-  - component: {fileID: 3459239857092593165}
   - component: {fileID: 3459239857092593650}
+  - component: {fileID: 8759456968823110748}
   m_Layer: 0
-  m_Name: dust
+  m_Name: cleaner
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 63e79249dcb7cac489a0b6583ca00f85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7e7a99ade7cfb146a2e54a1fff896ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,27 +103,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &3459239857092593165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3459239857092593161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c00e4447fee4b74f8a48e2391b7bcd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventTriggerEnter2D:
-    m_PersistentCalls:
-      m_Calls: []
-  eventTriggerExit2D:
-    m_PersistentCalls:
-      m_Calls: []
-  HP: 30
-  MaxHP: 30
-  atk: 10
 --- !u!114 &3459239857092593650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,3 +115,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 288d7853626c1444aa9d642685ca6e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8759456968823110748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459239857092593161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b699724eb47bd4cb1aa62118decd59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventTriggerEnter2D:
+    m_PersistentCalls:
+      m_Calls: []
+  eventTriggerExit2D:
+    m_PersistentCalls:
+      m_Calls: []
+  HP: 30
+  MaxHP: 30
+  atk: 10
