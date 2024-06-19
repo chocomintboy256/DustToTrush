@@ -7,7 +7,9 @@ public class HealthGauge : MonoBehaviour
     [SerializeField] private Image healthImage;
     [SerializeField] private Image burnImage;
     [SerializeField] GameObject target;
-    Vector3 targetPosCache;
+    [SerializeField] Vector3 targetPosCache;
+    [SerializeField] Vector2 targetPosCache2;
+    [SerializeField] Vector2 targetPosCache3;
 
     public float duration = 0.5f;
     public float strength = 20f;
@@ -25,6 +27,7 @@ public class HealthGauge : MonoBehaviour
     private void Start()
     {
         SetGauge(1f, false);
+        targetChase();
     }
 
     public void SetGauge(float value, bool isShake = true)
@@ -69,6 +72,10 @@ public class HealthGauge : MonoBehaviour
 
         targetChase();
     }
+    public void targetPosReflesh()
+    {
+        targetPosCache = Vector3.positiveInfinity;
+    }
 
     //---------------------------------------------------------------------------------------------------------------
     // ターゲットの頭上にライフゲージを移動させるプログラム
@@ -81,17 +88,19 @@ public class HealthGauge : MonoBehaviour
     //----------------------------------------------------------------------------------------------------------------
     private void targetChase()
     {
-        if (target && target.transform.position == targetPosCache) return;
+        if (target
+            && target.transform.position == targetPosCache
+            && targetPosCache2 == targetPosCache3 ) return;
         targetPosCache = target.transform.position;
 
         Vector2 size = GetComponent<RectTransform>().sizeDelta;
         Vector2 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, target.transform.position);
 
-        // var x = pos.x + (target.tag == "Respawn" ? 0.0f : -size.x / 2);
         pos = new Vector2(pos.x, pos.y + 25.0f);
         GameObject MainCanvas = GameMain.ins.MainCanvas;
-        pos = (pos - MainCanvas.GetComponent<RectTransform>().sizeDelta/2) * MainCanvas.transform.localScale;
-        GetComponent<RectTransform>().position = pos;
+        targetPosCache2 = (pos - MainCanvas.GetComponent<RectTransform>().sizeDelta/2) * MainCanvas.transform.localScale;
+        targetPosCache3 = GetComponent<RectTransform>().position;
+        GetComponent<RectTransform>().position = targetPosCache2;
     }
     static public GameObject CreateGauge(GameObject target)
     {

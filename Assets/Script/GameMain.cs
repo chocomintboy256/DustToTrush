@@ -2,15 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections.Generic;
 
 public class GameMain : MonoBehaviour
 {
     GameObject go;
-    public GameObject box;
+    public const int UNIT_SIZE = 32;
+    public List<GameObject> boxs;
     public GameObject MainCanvas;
     public GameObject hpGauge;
     public GameObject hpCanvas;
     public GameObject ScoreDisplayGo;
+    public GameObject MasterStepUp;
+    public GameObject MasterStepDown;
+    [NonSerialized] public StepUp stepUp;
+    [NonSerialized] public StepDown stepDown;
     public Text scoreText;
     public Text timeText;
     int totalScore = 0;

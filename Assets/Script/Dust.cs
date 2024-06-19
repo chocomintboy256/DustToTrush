@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 
-public class Cleaner : DragCharactor
+public class Dust : DragCharactor
 {
     private GameObject box;
     public bool BonusFg { get; protected set; }
@@ -14,17 +14,17 @@ public class Cleaner : DragCharactor
     {
         dustManager = transform.parent.GetComponent<DustManager>();
         BonusFg = false;
-        target = dustManager.Box;
 
         HP = 10;
         MaxHP = 10;
-        atk = -30;
+        atk = 5;
     }
  
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        Score = 30;
+        target = GameMain.ins.boxs[0];
+        Score = 10;
         dustManager = transform.parent.GetComponent<DustManager>();
     }
 

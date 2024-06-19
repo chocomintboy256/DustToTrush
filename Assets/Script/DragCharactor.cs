@@ -39,7 +39,9 @@ public class DragCharactor : MonoBehaviour
 
     void OnMouseUp()
     {
-        dustManager.TrashInDustDestory();
+        if (GameMain.ins.stepUp?.IsTargetIn == true)        dustManager?.TrashInStepUp();
+        else if (GameMain.ins.stepDown?.IsTargetIn == true) dustManager?.TrashInStepDown();
+        else                                                dustManager?.TrashInDust();
     }
     public void DestroyReference()
     {

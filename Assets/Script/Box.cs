@@ -9,6 +9,7 @@ public class Box : DragCharactor
     [SerializeField] DustManager Dusts;
     [SerializeField] HealthGauge HpGauge;
     private Collider2D col;
+    [NonSerialized] public List<DragCharactor> InDusts = new List<DragCharactor>();
     // Start is called before the first frame update
     void Start()
     {
@@ -40,11 +41,13 @@ public class Box : DragCharactor
         if (collision.gameObject.tag != "Respawn") return;
         DragCharactor dc = collision.gameObject.GetComponent<DragCharactor>();
         dc.eventTriggerEnter2D.Invoke(col);
+        InDusts.Add(dc);
     }
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "Respawn") return;
         DragCharactor dc = collision.gameObject.GetComponent<DragCharactor>();
         dc.eventTriggerExit2D.Invoke(col);
+        InDusts.Remove(dc);
     }
 }
