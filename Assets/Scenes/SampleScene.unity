@@ -506,6 +506,10 @@ MonoBehaviour:
   hpCanvas: {fileID: 1456071730}
   ScoreDisplayGo: {fileID: 9092856846661041444, guid: 61f16351413b92841bc4636154f31331,
     type: 3}
+  MasterStepUp: {fileID: 3459239857092593161, guid: a770f957186f8564a80a28179bba8e90,
+    type: 3}
+  MasterStepDown: {fileID: 3459239857092593161, guid: 89c9f071418cbf042960ced263efd8cb,
+    type: 3}
   scoreText: {fileID: 2034235799}
   timeText: {fileID: 1151648587}
 --- !u!20 &519420031
