@@ -8,8 +8,9 @@ public class HealthGauge : MonoBehaviour
     [SerializeField] private Image burnImage;
     [SerializeField] GameObject target;
     [SerializeField] Vector3 targetPosCache;
-    [SerializeField] Vector2 targetPosCache2;
-    [SerializeField] Vector2 targetPosCache3;
+    [SerializeField] Vector3 posCache;
+    RectTransform rectHpGauge;
+    RectTransform rectHpCanvas;
 
     public float duration = 0.5f;
     public float strength = 20f;
@@ -26,6 +27,9 @@ public class HealthGauge : MonoBehaviour
 
     private void Start()
     {
+        rectHpCanvas = transform.parent.GetComponent<RectTransform>();
+        rectHpGauge = GetComponent<RectTransform>();
+
         SetGauge(1f, false);
         targetChase();
     }
@@ -80,27 +84,25 @@ public class HealthGauge : MonoBehaviour
     //---------------------------------------------------------------------------------------------------------------
     // ターゲットの頭上にライフゲージを移動させるプログラム
     //----------------------------------------------------------------------------------------------------------------
-    // まずヘルスゲージの幅高さを取得します。
-    // 次にターゲットのスクリーン座標を取得します。ヘルスゲージの幅高さと計算して中央位置にして頭上へ微調整します。
-    // 最後にメインキャンバスの中央座標に変換してメインキャンバスの縮尺を適応しています。
-    // （※ターゲットの座標をスクリーン座標に変換するとメインキャンパスの座標になりました。
-    //   うまく動くのですがもうちょっと別のやり方がありそうです...）
+    // ターゲットのスクリーン座標を取得して頭上へ移動してキャンバスの座標にして設定
+    // ※ターゲットの位置とHPゲージの位置どちらも前回と同じなら処理しません
     //----------------------------------------------------------------------------------------------------------------
     private void targetChase()
     {
         if (target
             && target.transform.position == targetPosCache
-            && targetPosCache2 == targetPosCache3 ) return;
+            && rectHpGauge.localPosition == posCache) return;
+
         targetPosCache = target.transform.position;
 
-        Vector2 size = GetComponent<RectTransform>().sizeDelta;
-        Vector2 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, target.transform.position);
+        Camera camera = Camera.main;
+        Vector2 newPos = Vector2.zero;
+        Vector2 overHeadPos = new Vector2(0.0f, -25.0f);
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(camera, target.transform.position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectHpCanvas, screenPos, camera, out newPos);
 
-        pos = new Vector2(pos.x, pos.y + 25.0f);
-        GameObject MainCanvas = GameMain.ins.MainCanvas;
-        targetPosCache2 = (pos - MainCanvas.GetComponent<RectTransform>().sizeDelta/2) * MainCanvas.transform.localScale;
-        targetPosCache3 = GetComponent<RectTransform>().position;
-        GetComponent<RectTransform>().position = targetPosCache2;
+        posCache = rectHpGauge.localPosition;
+        rectHpGauge.localPosition = newPos - overHeadPos;
     }
     static public GameObject CreateGauge(GameObject target)
     {

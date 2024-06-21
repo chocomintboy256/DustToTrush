@@ -130,8 +130,8 @@ public class DustManager : MonoBehaviour
         GenerateDusts();
         
         return new List<DragCharactor> {
-            StepUp.Generate(position: GetRandomVector3()),
-            StepDown.Generate(position: GetRandomVector3())
+            StepUp.Generate(position: GetRandomPositionInEnterField()),
+            StepDown.Generate(position: GetRandomPositionInEnterField())
         };
     }
     DragCharactor CreateDust()
@@ -142,7 +142,7 @@ public class DustManager : MonoBehaviour
                                     nextBonusType == (int)BONUS_TYPE.BIG     ? rainbowDustBig : 
                                     nextBonusType == (int)BONUS_TYPE.GRAPE   ? dustCleaner : 
                                     nextNormalType == (int)NORMAL_TYPE.TYPE2  ? normalDustType2 : normalDust;
-        GameObject newDust = Instantiate(nextGameObject, GetRandomVector3(), Quaternion.identity, transform);
+        GameObject newDust = Instantiate(nextGameObject, GetRandomPositionInEnterField(), Quaternion.identity, transform);
         HealthGauge.CreateGauge(newDust);
         return newDust.GetComponent<DragCharactor>();
     }
@@ -164,10 +164,11 @@ public class DustManager : MonoBehaviour
         return result;
     }
 
-    Vector3 GetRandomVector3()
+    Vector3 GetRandomPositionInEnterField()
     {
-        float w = (Screen.width/GameMain.UNIT_SIZE) / 2.0f - 1.0f;
-        float h = (Screen.height/GameMain.UNIT_SIZE) / 2.0f - 1.0f;
+        Vector2 rectSize = GameMain.ins.MainCanvas.GetComponent<RectTransform>().sizeDelta;
+        float w = (rectSize.x / GameMain.UNIT_SIZE) / 2.0f - GameMain.DUST_ENTER_FIELD_PADDING_UNIT;
+        float h = (rectSize.y / GameMain.UNIT_SIZE) / 2.0f - GameMain.DUST_ENTER_FIELD_PADDING_UNIT;
         Vector3 vec = new Vector3(
             UnityEngine.Random.Range(-w,w),
             UnityEngine.Random.Range(-h,h),
@@ -178,7 +179,7 @@ public class DustManager : MonoBehaviour
 
     public void ResetPosition(Transform tr)
     {
-        tr.position = GetRandomVector3();
+        tr.position = GetRandomPositionInEnterField();
     }
 
 

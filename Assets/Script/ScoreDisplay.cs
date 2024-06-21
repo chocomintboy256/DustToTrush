@@ -40,12 +40,14 @@ public class ScoreDisplay : MonoBehaviour
 
     public void SetPos(Vector3 targetPos)
     {
-        Vector2 size = GetComponent<RectTransform>().sizeDelta;
-        Vector2 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, targetPos);
+        RectTransform rectScoreDisp = GetComponent<RectTransform>();
+        RectTransform rectMainCanvas = GameMain.ins.MainCanvas.GetComponent<RectTransform>();
+        Camera camera = Camera.main;
 
-        pos = new Vector2(pos.x, pos.y + 25.0f);
-        GameObject MainCanvas = GameMain.ins.MainCanvas;
-        pos = (pos - MainCanvas.GetComponent<RectTransform>().sizeDelta / 2) * MainCanvas.transform.localScale;
-        GetComponent<RectTransform>().position = pos;
+        Vector2 newPos = Vector2.zero;
+        Vector2 overHeadPos = new Vector2(0.0f, -25.0f);
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(camera, targetPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectMainCanvas, screenPos, camera, out newPos);
+        rectScoreDisp.localPosition = newPos - overHeadPos;
     }
 }
