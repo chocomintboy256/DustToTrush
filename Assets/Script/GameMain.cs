@@ -8,6 +8,7 @@ public class GameMain : MonoBehaviour
 {
     GameObject go;
     public const int UNIT_SIZE = 32;
+    public const float DUST_ENTER_FIELD_PADDING_UNIT = 1.0f;
     public List<GameObject> boxs;
     public GameObject MainCanvas;
     public GameObject hpGauge;
@@ -22,6 +23,7 @@ public class GameMain : MonoBehaviour
     int totalScore = 0;
     int timeRemining = 60;
     int timeBonus = 5;
+    [NonSerialized] public Party party;
     public static GameMain _ins = null;
     public static GameMain ins
     {
@@ -35,6 +37,7 @@ public class GameMain : MonoBehaviour
         ins = this;
         scoreText.text = "Score: " + totalScore.ToString();
         UnityEngine.Random.InitState(DateTime.Now.Millisecond);
+        party = new Party();
 
         // get hierarchy objects
         Scene scene = SceneManager.GetSceneByBuildIndex(0);

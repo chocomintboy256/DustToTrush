@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +11,7 @@ public class Box : DragCharactor
     [SerializeField] DustManager Dusts;
     [SerializeField] HealthGauge HpGauge;
     private Collider2D col;
+    private static Box dragTarget;
     [NonSerialized] public List<DragCharactor> InDusts = new List<DragCharactor>();
     // Start is called before the first frame update
     void Start()
@@ -34,10 +37,33 @@ public class Box : DragCharactor
         gameObject.SetActive(false);
         hpGauge.gameObject.SetActive(false);
     }
+    private void OnMouseDown()
+    {
+        dragTarget = this;
+    }
+    protected override void OnMouseUp()
+    {
+        dragTarget = null;
+        base.OnMouseUp();
+    }
+    private void OnMouseDrag()
+    {
+        Party party = GameMain.ins.party;
+        if (!party.isReader(dragTarget)) party.Remove(dragTarget);
+        else
+            GameMain.ins.party.followMove();
+    }
 
     // 当たり判定
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        Box box = collision.gameObject.GetComponent<Box>();
+        if (box) {
+            Party party = GameMain.ins.party;
+            // in された側が先に処理される
+            party.Add(new []{ box, this });
+        }
+
         if (collision.gameObject.tag != "Respawn") return;
         DragCharactor dc = collision.gameObject.GetComponent<DragCharactor>();
         dc.eventTriggerEnter2D.Invoke(col);
