@@ -18,6 +18,7 @@ public class Dust : DragCharactor
         HP = 10;
         MaxHP = 10;
         atk = 5;
+        exp = 1;
     }
  
     // Start is called before the first frame update

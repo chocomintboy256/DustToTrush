@@ -40,10 +40,14 @@ public class DustManager : MonoBehaviour
 
     }
     public void TrashInStepUp() {
+        // 上の階へ移動
+        GameMain.ins.Floor = GameMain.ins.Floor - 1;
         // 今のゴミを削除して終了
         DestroyAllDusts();
     }
     public void TrashInStepDown() {
+        // 下の階へ移動
+        GameMain.ins.Floor = GameMain.ins.Floor + 1;
         // 今のゴミを削除して次のゴミを出す
         DestroyAllDusts();
         GenerateDustsWithSteps();
@@ -62,7 +66,7 @@ public class DustManager : MonoBehaviour
                 GenerateDustsWithSteps();
                 isFirstCreanAll = false;
             }
-            GameMain.ins.AddTimeBonus();
+            // GameMain.ins.AddFloorBonus();
         }
     }
 
@@ -78,6 +82,7 @@ public class DustManager : MonoBehaviour
                 BattleAnimation battleAnim = new BattleAnimation(x, bx);
                 // ゴミとボックスを衝突: アニメーション
                 if (x.atk >= 0) await battleAnim.ClashPlay();
+                else bx.RecoverHP();
 
                 // ゴミとボックスを衝突: 計算
                 x.HP = Mathf.Min(x.MaxHP, Mathf.Max(0, x.HP - bx.atk));
@@ -92,7 +97,9 @@ public class DustManager : MonoBehaviour
                 if (x.HP == 0)
                 {
                     GameMain.ins.boxs.ForEach((GameObject box2) => { box2.GetComponent<Box>().InDusts.Remove(x); });
+                    bx.exp += x.exp;
                     DustDestroy(x);
+                    bx.LevelUpProc();
                 } else if (battleAnim.IsClashPlay) _ = battleAnim.AddRebound(x.transform, sign: false);
 
                 // ゴミとボックス衝突後の跳ね返り: アニメーション

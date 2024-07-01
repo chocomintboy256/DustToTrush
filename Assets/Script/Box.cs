@@ -40,6 +40,8 @@ public class Box : DragCharactor
     private void OnMouseDown()
     {
         dragTarget = this;
+        var str = $"レベル: {level}, HP: {HP}, atk:{atk}, exp:{exp}, nextLevel:{requiredExp[level]}";
+        Debug.Log(str);
     }
     protected override void OnMouseUp()
     {
