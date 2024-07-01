@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
 
@@ -19,10 +18,11 @@ public class GameMain : MonoBehaviour
     [NonSerialized] public StepUp stepUp;
     [NonSerialized] public StepDown stepDown;
     public Text scoreText;
-    public Text timeText;
+    public Text floorText;
     int totalScore = 0;
-    int timeRemining = 60;
-    int timeBonus = 5;
+    int floor = 1;
+    public int Floor { get { return floor; } set { floor = value; RefleshFloor(); }}
+
     [NonSerialized] public Party party;
     public static GameMain _ins = null;
     public static GameMain ins
@@ -31,22 +31,17 @@ public class GameMain : MonoBehaviour
         set { if (_ins == null) _ins = value; }
     }
 
+    void Awake()
+    {
+        ins = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        ins = this;
         scoreText.text = "Score: " + totalScore.ToString();
         UnityEngine.Random.InitState(DateTime.Now.Millisecond);
         party = new Party();
-
-        // get hierarchy objects
-        Scene scene = SceneManager.GetSceneByBuildIndex(0);
-        GameObject[] rootObjects = scene.GetRootGameObjects();
-        foreach (GameObject obj in rootObjects)
-        {
-            Debug.Log(obj.name);
-        }
-        TimerUpdate();
+        RefleshFloor();
     }
 
     // Update is called once per frame
@@ -54,24 +49,14 @@ public class GameMain : MonoBehaviour
     {
 
     }
-    public void TimerUpdate()
-    {
-        RefleshTimer();
-        Invoke("TimerUpdate", 1.0f);
-    }
-    public void RefleshTimer()
+    public void RefleshFloor()
     { 
-        timeRemining--;
-        timeText.text = "Time: " + timeRemining;
+        floorText.text = "ÉtÉçÉA: " + floor;
     }
+ 
     public void RefleshScore()
     {
         scoreText.text = "Score: " + totalScore.ToString();
-    }
-    public void AddTimeBonus()
-    {
-        timeRemining += timeBonus;
-        RefleshTimer();
     }
     public void TrushIn(int trushScore, Vector3 pos)
     {
