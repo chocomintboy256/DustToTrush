@@ -36,6 +36,10 @@ public class DragCharactor : MonoBehaviour
     {
 
     }
+    public virtual void RecoverHP()
+    {
+        GetComponent<SpriteEffector>().Flashing();
+    }
 
     protected virtual void OnMouseUp()
     {
