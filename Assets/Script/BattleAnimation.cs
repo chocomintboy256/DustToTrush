@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 
-public class BattleAnimation : MonoBehaviour
+public class BattleAnimation
 {
     const float DURATION_BACK = 0.3f;
     const float DURATION_TO = 0.3f;
@@ -18,12 +18,13 @@ public class BattleAnimation : MonoBehaviour
     Vector3 addBackPosA;
     Vector3 addBackPosB;
     public bool IsClashPlay { get; set; }
-    Sequence reboundSeq = DOTween.Sequence();
+    Sequence reboundSeq;
 
     public BattleAnimation(DragCharactor a, DragCharactor b)
     {
         this.a = a;
         this.b = b;
+        reboundSeq = DOTween.Sequence().Pause();
     }
 
     // Tween: ゴミとボックスを衝突する
@@ -67,12 +68,7 @@ public class BattleAnimation : MonoBehaviour
             tf.gameObject.GetComponent<DragCharactor>().hpGauge.targetPosReflesh(); 
         };
         Vector3 pos = tf.position + (sign ? 1: -1) * addBackPos / (boundHalf ? 2.0f : 1.0f);
-        return reboundSeq.Join(
-            DOTween.Sequence()
-                    .Append(tf.DOLocalMove(pos, duration)
-                      .SetEase(Ease.OutSine).OnComplete(comp).SetLink(tf.gameObject)));
+        var s = tf.DOLocalMove(pos, duration).OnComplete(comp).SetEase(Ease.OutSine).SetLink(tf.gameObject);
+        return reboundSeq.Join(s);
     }
-
-    void Start() { }
-    // void Update() { }
 }
