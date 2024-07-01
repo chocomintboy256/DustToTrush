@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Party : MonoBehaviour
+public class Party
 {
     const float FOLLOW_DISTANCE = 2.0f;
-    public List<DragCharactor> party = new List<DragCharactor>();
+    public List<DragCharactor> party;
     public bool isParty { get { return party.Count > 0; } }
+
+    public Party(List<DragCharactor> party = null)
+    {
+        this.party = party ?? new List<DragCharactor>();
+    }
 
     public void Add(Array cs)
     {
@@ -44,7 +49,4 @@ public class Party : MonoBehaviour
             t = m;
         }
     }
-
-    void Start() { }
-    void Update() { }
 }
